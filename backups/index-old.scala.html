@@ -1,0 +1,90 @@
+@(bc: de.htwg.madn.controller.IBoardControllerPort)
+
+@main {
+    
+<a href="/">home</a> | <a href="/cmd/r">reset</a>
+
+<div id="controls">
+	
+	@if(!bc.gameIsRunning() && bc.getModelPort().getPlayers().size() < bc.getSettings().getMaxPlayers()) {
+		<div id="add-player">
+		    <a href="/cmd/add:player1234">add random player</a>
+		</div> 
+	} 
+	
+	@if(!bc.gameIsRunning() && bc.getPlayers().size() >= bc.getSettings().getMinPlayers()) {
+	    <div id="start-game">
+            <a href="/cmd/s">start game</a>
+        </div> 
+	}
+	@if(bc.gameIsRunning()) {
+	   <div id="dice">
+	        <a href="/cmd/d">roll dice</a>
+	    </div>
+	}
+
+</div>
+
+<div id="status">
+    @if(bc.getActivePlayerString() != null) {
+        @bc.getActivePlayerString():
+    }
+    @bc.getStatusString()
+</div>
+
+<div id="gameboard">
+
+    @for(player <- bc.getPlayers()) {
+        
+        <div class="home" id="home-@player.getId()">
+            <div class="playername">
+                <h3>@player.getName()</h3>
+            </div>
+            <div class="fields">
+	            @for(i <- 0 until bc.getSettings().getFiguresPerPlayer()) {
+	                @defining(player.getHomeField().getFigure(i)) { figure =>
+	                    <div class="field field-@i 
+	                       @if(figure != null) {player player-@figure.getOwner().getId()}"
+	                       id="@if(figure != null) {figure-@figure.getLetter()}">
+	                       
+	                       @if(figure != null) {<div class="figure"></div>}   
+	                    </div>
+	                }
+	            }
+            </div>
+        </div>
+        
+        <div class="finish" id="finish-@player.getId()">
+            @for(i <- 0 until bc.getSettings().getFiguresPerPlayer()) {
+	            @defining(player.getFinishField().getFigure(i)) { figure =>
+	                <div class="field field-@i 
+                        @if(figure != null) {player player-@figure.getOwner().getId()}"
+                        id="@if(figure != null) {figure-@figure.getLetter()}">
+                        
+                        @if(figure != null) {<div class="figure"></div>}   
+                    </div>
+	            }
+            }
+        </div>
+    }   
+    
+    <div id="public">
+        @defining(bc.getModelPort().getPublicField()) { public =>
+            @for(i <- 0 until bc.getSettings().getPublicFieldsCount()) {
+	            @defining(public.getFigure(i)) { figure =>
+	                <div class="field field-@i 
+                       @if(figure != null) {player player-@figure.getOwner().getId()}"
+                       id="@if(figure != null) {figure-@figure.getLetter()}">
+                       
+                       @if(figure != null) {<div class="figure"></div>}   
+                    </div>
+	            }
+            }
+        }
+    </div>
+    
+
+</div> <!-- #gameboard -->
+
+}
+

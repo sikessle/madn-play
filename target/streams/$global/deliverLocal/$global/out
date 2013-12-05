@@ -1,0 +1,4 @@
+[0m[[0minfo[0m] [0m:: delivering :: madn-play#madn-play_2.10;1.0-SNAPSHOT :: 1.0-SNAPSHOT :: integration :: Thu Dec 05 11:28:15 CET 2013[0m
+[0m[[0mdebug[0m] [0m	options = status=integration pubdate=Thu Dec 05 11:28:15 CET 2013 validate=true resolveDynamicRevisions=true merge=true resolveId=null pubBranch=null[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /Users/sikessle/Documents/Software/git-repositories/webtech/MADN-play/target/scala-2.10/ivy-1.0-SNAPSHOT.xml[0m
+[0m[[0mdebug[0m] [0m	deliver done (17ms)[0m
