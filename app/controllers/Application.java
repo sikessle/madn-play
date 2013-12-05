@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.Map;
-
 import models.BoardControllerObserver;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -41,7 +39,6 @@ public class Application extends Controller {
 
 	public static Result apiJsonCommand(String cmd) {
 		ObjectNode result = Json.newObject();
-		final Map<String, String[]> req = request().body().asFormUrlEncoded();
 
 		if ("dice".equals(cmd)) {
 			boardController.rollDice();
