@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/ -Dhttp.port=$PORT
+web: play run --http.port=$PORT $PLAY_OPTS
