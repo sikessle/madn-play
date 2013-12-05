@@ -9,7 +9,8 @@ $(document).ready(function() {
 
 
 function connectWebSocketAndSetUpPushHandler() {
-	var socket = new WebSocket("ws://localhost:9000/socket");
+	var socketUrl = 'ws://' + window.location.host + '/socket';
+	var socket = new WebSocket(socketUrl);
 	socket.onmessage = function(msg) {
 		var jsonMsg = JSON.parse(msg.data);
 		refreshGameFromJsonData(jsonMsg);
