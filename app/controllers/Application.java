@@ -8,6 +8,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import de.htwg.madn.controller.IBoardControllerPort;
@@ -54,12 +55,12 @@ public class Application extends Controller {
 		return ok(result);
 	}
 
-	public static WebSocket<String> connectWebSocket() {
-		return new WebSocket<String>() {
+	public static WebSocket<JsonNode> connectWebSocket() {
+		return new WebSocket<JsonNode>() {
 
 			@Override
-			public void onReady(WebSocket.In<String> in,
-					WebSocket.Out<String> out) {
+			public void onReady(WebSocket.In<JsonNode> in,
+					WebSocket.Out<JsonNode> out) {
 				new BoardControllerObserver(boardController, out);
 			}
 

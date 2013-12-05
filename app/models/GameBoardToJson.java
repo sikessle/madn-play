@@ -23,10 +23,10 @@ public class GameBoardToJson {
 		this.controller = boardController;
 	}
 
-	public String getGameAsJson() {
+	public JsonNode getGameAsJson() {
 		result = Json.newObject();
 		fillResultWithGameData();
-		return result.toString();
+		return result;
 	}
 
 	private void fillResultWithGameData() {
