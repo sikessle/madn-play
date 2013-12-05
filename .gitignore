@@ -1,3 +1,4 @@
+activator-sbt-atmos-play-shim.sbt
 logs
 project/project
 project/target
