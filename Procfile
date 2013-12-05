@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/MADN-play -Dhttp.port=$PORT
+web: target/universal/stage/bin/ -Dhttp.port=$PORT
