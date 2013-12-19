@@ -4,6 +4,7 @@ $(document).ready(function() {
 	setUpClickHandler();
 	$(window).resize(scaleGameBoard);
 	$(window).resize();
+	$('body').backstretch("/assets/images/body.jpg");
 	
 });
 
