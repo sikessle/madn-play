@@ -7,6 +7,9 @@ GET     /cmd/:id                    controllers.Application.command(id: String)
 GET     /api/tui/:id                controllers.Application.apiTuiCommand(id: String)
 POST    /api/json/:id               controllers.Application.apiJsonCommand(id: String)
 GET     /socket                     controllers.Application.connectWebSocket()
+GET     /login                      controllers.Application.login()
+GET     /logout                     controllers.Application.logout()
+POST    /login                      controllers.Application.authenticate()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

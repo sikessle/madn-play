@@ -1,10 +1,16 @@
 package controllers;
 
 import models.BoardControllerObserver;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
+import play.data.*;
+import static play.data.Form.*;
+import play.*;
+import play.mvc.*;
+import play.mvc.Http.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -19,6 +25,7 @@ public class Application extends Controller {
 			.getInstance().getBoardController();
 	private static TUIView tui = GameTuiSingleton.getInstance().getTUIView();
 
+	@Security.Authenticated(Secured.class)
 	public static Result index() {
 		return getResult();
 	}
@@ -62,5 +69,42 @@ public class Application extends Controller {
 			}
 
 		};
+	}
+
+	public static Result logout() {
+		session().clear();
+		return redirect(routes.Application.login());
+	}
+
+	public static Result login() {
+		return ok(views.html.login.render(Form.form(Login.class)));
+	}
+
+	public static Result authenticate() {
+		Form<Login> loginForm = DynamicForm.form(Login.class).bindFromRequest();
+		if (loginForm.hasErrors()) {
+			return badRequest(views.html.login.render(loginForm));
+		} else {
+			session().clear();
+			session("email", loginForm.get().email);
+			return redirect(routes.Application.index());
+		}
+	}
+
+	public static class Login {
+
+		public String email;
+		public String password;
+
+		private static String defaultEmail = "user@htwg.de";
+		private static String defaultPassword = "root";
+
+		public String validate() {
+
+			if (defaultEmail.equals(email) && defaultPassword.equals(password)) {
+				return null;
+			}
+			return "Invalid user or password";
+		}
 	}
 }
