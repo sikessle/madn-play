@@ -1,4 +1,4 @@
-@(content: Html)
+@(user: String)(content: Html)
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +30,9 @@
             <li class="active"><a href="/">Game</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Game Rules</a></li>
-            <li><a href="@routes.Application.logout()">Logout</a></li>
+            @if(user) {
+                <li><a href="@routes.Application.logout()"><strong>Logout: @user</strong></a></li>
+            }
           </ul>
         </div><!--/.nav-collapse -->
       </div>

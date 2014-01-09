@@ -36,7 +36,8 @@ public class Application extends Controller {
 	}
 
 	private static Result getResult() {
-		return ok(views.html.index.render(boardController));
+		String user = request().username();
+		return ok(views.html.index.render(boardController, user));
 	}
 
 	public static Result apiTuiCommand(String id) {
