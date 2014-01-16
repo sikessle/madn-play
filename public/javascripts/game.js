@@ -141,6 +141,9 @@ function scaleGameBoard() {
 	var gameboard = $("#gameboard");
 	
 	var maxWidth = $(window).height() - $("#control").height();
+	if (maxWidth > $(window).width()) {
+		maxWidth = $(window).width();
+	}
 	gameboard.css("max-width", maxWidth);
 	
 	if (gameboard.width() >= 600) {
