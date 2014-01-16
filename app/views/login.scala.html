@@ -1,4 +1,4 @@
-@(form: Form[Application.Login])
+@(form: play.data.Form[Application.Login])
 
 
 @main(null) { 
@@ -22,32 +22,38 @@
 			          </a>
 			    </div>
 			    
-			    <div class="separator"></div>
+			    <div id="open-local-login">
+			         - Use local login - 
+			    </div>
 			    
-			    <!-- Sign in with local user management -->
-                @helper.form(action = routes.Application.authenticate) {
-			    
-			    @if(form.hasGlobalErrors) {
-		        <div class="alert alert-danger">
-		            @form.globalError.message
-		        </div>
-		        }
-			    
-			   <div class="form-group">
-			       <label for="input-email">Email</label>
-		           <input type="email" name="email" class="form-control" id="input-email" placeholder="E-Mail"  value="@form("email").value">
-			   </div>
-			   
-			   <div class="form-group">
-		           <label for="input-password">Password</label>
-		           <input type="password" name="password" class="form-control" id="input-password" placeholder="Password">
-		       </div>
-		     
-		       <div class="center">
-		          <button type="submit" class="btn btn-lg btn-primary">Log in local user</button>
-			   </div>
-			   
-			   }
+			    <div style="display: none;" id="local-login">
+				    <div class="separator"></div>
+				    
+				    <!-- Sign in with local user management -->
+	                @helper.form(action = routes.Application.authenticate) {
+				    
+				    @if(form.hasGlobalErrors) {
+			        <div class="alert alert-danger">
+			            @form.globalError.message
+			        </div>
+			        }
+				    
+				   <div class="form-group">
+				       <label for="input-email">Email</label>
+			           <input type="email" name="email" class="form-control" id="input-email" placeholder="E-Mail"  value="@form("email").value">
+				   </div>
+				   
+				   <div class="form-group">
+			           <label for="input-password">Password</label>
+			           <input type="password" name="password" class="form-control" id="input-password" placeholder="Password">
+			       </div>
+			     
+			       <div class="center">
+			          <button type="submit" class="btn btn-lg btn-primary">Log in local user</button>
+				   </div>
+				   
+				   }
+			   </div> <!-- /#local-login  -->
 		    
 		    </div> <!-- /#login -->
 		    

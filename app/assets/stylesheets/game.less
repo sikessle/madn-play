@@ -7,6 +7,51 @@
 @field-size: 30px;
 @dice-size: 40px;
 
+/* LESS Mixins */
+.gradient (@startColor: #eee, @endColor: white) {
+    background-color: @startColor;
+    background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+    background: -webkit-linear-gradient(top, @startColor, @endColor);
+    background: -moz-linear-gradient(top, @startColor, @endColor);
+    background: -ms-linear-gradient(top, @startColor, @endColor);
+    background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+.translateZ (@dimension) {
+    -webkit-transform: translateZ( @dimension );
+     -moz-transform: translateZ( @dimension );
+       -o-transform: translateZ( @dimension );
+          transform: translateZ( @dimension );
+}
+
+.rotateX-translateZ (@deg, @dimension) {
+  -webkit-transform: rotateX( @deg ) translateZ( @dimension );
+     -moz-transform: rotateX( @deg ) translateZ( @dimension );
+       -o-transform: rotateX( @deg ) translateZ( @dimension );
+          transform: rotateX( @deg ) translateZ( @dimension );
+}
+
+.rotateY-translateZ (@deg, @dimension) {
+  -webkit-transform: rotateY( @deg ) translateZ( @dimension );
+     -moz-transform: rotateY( @deg ) translateZ( @dimension );
+       -o-transform: rotateY( @deg ) translateZ( @dimension );
+          transform: rotateY( @deg ) translateZ( @dimension );
+}
+
+.translateZ-rotateX (@deg, @dimension) {
+  -webkit-transform: translateZ( @dimension ) rotateX( @deg );
+     -moz-transform: translateZ( @dimension ) rotateX( @deg );
+       -o-transform: translateZ( @dimension ) rotateX( @deg );
+          transform: translateZ( @dimension ) rotateX( @deg );
+}
+
+.translateZ-rotateY (@deg, @dimension) {
+  -webkit-transform: translateZ( @dimension ) rotateY( @deg );
+     -moz-transform: translateZ( @dimension ) rotateY( @deg );
+       -o-transform: translateZ( @dimension ) rotateY( @deg );
+          transform: translateZ( @dimension ) rotateY( @deg );
+}
+
 /* page layout */
 /* ********************* */
 
@@ -30,7 +75,7 @@ body {
     text-align: center;
 }
 
-/* gameboard */
+/* gameboard / login */
 /* ********************* */
 
 #gameboard {
@@ -57,6 +102,12 @@ body {
 #login .separator {
     margin: 40px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+#open-local-login {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
 }
 
 .navbar-inverse {
@@ -89,6 +140,7 @@ body {
 
 .player-name {
     text-align: center;
+    font-weight: bold;
 }
 
 .field {
@@ -107,6 +159,7 @@ body {
 .home.player-0 .field,
 .finish.player-0 .field {
     background: @player0-color;
+    
 }
 
 .home.player-1 .field,
@@ -262,6 +315,7 @@ body {
     &:hover {
         cursor: pointer;
     }
+    .translateZ(-@dice-size/2);
 }
 
 #dice .side {
@@ -282,75 +336,39 @@ body {
 }
 
 #dice .one  {
-  -webkit-transform: translateZ( @dice-size / 2 );
-     -moz-transform: translateZ( @dice-size / 2 );
-       -o-transform: translateZ( @dice-size / 2 );
-          transform: translateZ( @dice-size / 2 );
+    .translateZ(@dice-size / 2);
 }
 #dice .six   {
-  -webkit-transform: rotateX( -180deg ) translateZ( @dice-size / 2 );
-     -moz-transform: rotateX( -180deg ) translateZ( @dice-size / 2 );
-       -o-transform: rotateX( -180deg ) translateZ( @dice-size / 2 );
-          transform: rotateX( -180deg ) translateZ( @dice-size / 2 );
+    .rotateX-translateZ(-180deg, @dice-size / 2);
 }
 #dice .four {
-  -webkit-transform: rotateY(   90deg ) translateZ( @dice-size / 2 );
-     -moz-transform: rotateY(   90deg ) translateZ( @dice-size / 2 );
-       -o-transform: rotateY(   90deg ) translateZ( @dice-size / 2 );
-          transform: rotateY(   90deg ) translateZ( @dice-size / 2 );
+    .rotateY-translateZ(90deg, @dice-size / 2);
 }
 #dice .three {
-  -webkit-transform: rotateY(  -90deg ) translateZ( @dice-size / 2 );
-     -moz-transform: rotateY(  -90deg ) translateZ( @dice-size / 2 );
-       -o-transform: rotateY(  -90deg ) translateZ( @dice-size / 2 );
-          transform: rotateY(  -90deg ) translateZ( @dice-size / 2 );
+    .rotateY-translateZ(-90deg, @dice-size / 2);
 }
 #dice .five {
-  -webkit-transform: rotateX(   90deg ) translateZ( @dice-size / 2 );
-     -moz-transform: rotateX(   90deg ) translateZ( @dice-size / 2 );
-       -o-transform: rotateX(   90deg ) translateZ( @dice-size / 2 );
-          transform: rotateX(   90deg ) translateZ( @dice-size / 2 );
+    .rotateX-translateZ(90deg, @dice-size / 2);
 }
 #dice .two {
-  -webkit-transform: rotateX(  -90deg ) translateZ( @dice-size / 2 );
-     -moz-transform: rotateX(  -90deg ) translateZ( @dice-size / 2 );
-       -o-transform: rotateX(  -90deg ) translateZ( @dice-size / 2 );
-          transform: rotateX(  -90deg ) translateZ( @dice-size / 2 );
+    .rotateX-translateZ(-90deg, @dice-size / 2);
 }
 
 #dice.show-one {
-  -webkit-transform: translateZ( -@dice-size / 2 );
-     -moz-transform: translateZ( -@dice-size / 2 );
-       -o-transform: translateZ( -@dice-size / 2 );
-          transform: translateZ( -@dice-size / 2 );
+    .translateZ(-@dice-size / 2);
 }
 #dice.show-six {
-  -webkit-transform: translateZ( -@dice-size / 2 ) rotateX( -180deg );
-     -moz-transform: translateZ( -@dice-size / 2 ) rotateX( -180deg );
-       -o-transform: translateZ( -@dice-size / 2 ) rotateX( -180deg );
-          transform: translateZ( -@dice-size / 2 ) rotateX( -180deg );
+    .translateZ-rotateX(-180deg, -@dice-size / 2);
 }
 #dice.show-four {
-  -webkit-transform: translateZ( -@dice-size / 2 ) rotateY(  -90deg );
-     -moz-transform: translateZ( -@dice-size / 2 ) rotateY(  -90deg );
-       -o-transform: translateZ( -@dice-size / 2 ) rotateY(  -90deg );
-          transform: translateZ( -@dice-size / 2 ) rotateY(  -90deg );
+    .translateZ-rotateY(-90deg, -@dice-size / 2);
 }
 #dice.show-three {
-  -webkit-transform: translateZ( -@dice-size / 2 ) rotateY(   90deg );
-     -moz-transform: translateZ( -@dice-size / 2 ) rotateY(   90deg );
-       -o-transform: translateZ( -@dice-size / 2 ) rotateY(   90deg );
-          transform: translateZ( -@dice-size / 2 ) rotateY(   90deg );
+    .translateZ-rotateY(90deg, -@dice-size / 2);
 }
 #dice.show-five {
-  -webkit-transform: translateZ( -@dice-size / 2 ) rotateX(  -90deg );
-     -moz-transform: translateZ( -@dice-size / 2 ) rotateX(  -90deg );
-       -o-transform: translateZ( -@dice-size / 2 ) rotateX(  -90deg );
-          transform: translateZ( -@dice-size / 2 ) rotateX(  -90deg );
+    .translateZ-rotateX(-90deg, -@dice-size / 2);
 }
 #dice.show-two {
-  -webkit-transform: translateZ( -@dice-size / 2 ) rotateX(   90deg );
-     -moz-transform: translateZ( -@dice-size / 2 ) rotateX(   90deg );
-       -o-transform: translateZ( -@dice-size / 2 ) rotateX(   90deg );
-          transform: translateZ( -@dice-size / 2 ) rotateX(   90deg );
+    .translateZ-rotateX(90deg, -@dice-size / 2);
 }

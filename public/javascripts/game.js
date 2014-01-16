@@ -8,7 +8,7 @@ $(document).ready(function() {
 	
 });
 
-
+/* Sets up the web socket connection and the data handlers */
 function connectWebSocketAndSetUpPushHandler() {
 	var socketUrl = 'ws://' + window.location.host + '/socket';
 	var socket = new WebSocket(socketUrl);
@@ -18,6 +18,7 @@ function connectWebSocketAndSetUpPushHandler() {
 	};
 }
 
+/* writes the json gameboard data to the DOM */
 function refreshGameFromJsonData(data) {
 	refreshStatus(data.status, data.activePlayer);
 	refreshControlButtons(data.canStartGame, data.canQuitGame, data.canAddPlayer);
@@ -28,11 +29,13 @@ function refreshGameFromJsonData(data) {
 	refreshPublicFields(data.publicFields);
 }
 
+/* clears all figure fields */
 function clearAllFields() {
 	$('.figure').attr('class', 'figure').attr('id', '').attr('href', '#');
 	$('.player-name').html('');
 }
 
+/* refreshes the game status */
 function refreshStatus(status, activePlayer) {
 	$('#status-text .body').fadeOut(function() {
 		if (activePlayer) {
@@ -44,6 +47,7 @@ function refreshStatus(status, activePlayer) {
 	});
 }
 
+/* enables/disables the control buttons */
 function refreshControlButtons(canStart, canQuit, canAddPlayer) {
 	var start = $('#start');
 	var quit = $('#quit');
@@ -100,13 +104,14 @@ function refreshDiceContainer(dice, activePlayer) {
 	}
 }
 
+/* adds the href, id and classes for a figure link */
 function attachFigureAttrsToLink(link, figureLetter, playerId) {
 	link.attr('href', '/cmd/m:' + figureLetter);
 	link.addClass('player-' + playerId);
 	link.attr('id', 'figure-' + figureLetter);
 }
 
-
+/* refreshes the finish and home fields. type must be "home" or "finish" */
 function refreshSpecialFields(specialFields, type) {
 	specialFields.forEach(function(specialFieldEntry) {
 		
@@ -130,6 +135,8 @@ function refreshPublicFields(publicFields) {
 	});
 }
 
+/* takes care of dynamic resizing the gameboard. Makes sure, that
+ * the board is always fully visible (even in vertical viewport). */
 function scaleGameBoard() {
 	var fieldSmall = 30;
 	var fieldLarge = 45;
@@ -170,6 +177,7 @@ function scaleGameBoard() {
 	});
 }
 
+/* Adds the click event handler for various elements */
 function setUpClickHandler() {
 	$('#add-player-dialog').on('shown.bs.modal', function() {
 		$(this).find('input').focus();
@@ -209,5 +217,11 @@ function setUpClickHandler() {
 	
 	$('.dice-container').click(function(e) {
 		$.get("/api/tui/d");
+	});
+	
+	$('#open-local-login').click(function(e) {
+		$(this).fadeOut('fast', function() {
+			$('#local-login').slideDown();
+		});
 	});
 }
