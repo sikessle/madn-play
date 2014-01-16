@@ -138,43 +138,16 @@ function refreshPublicFields(publicFields) {
 /* takes care of dynamic resizing the gameboard. Makes sure, that
  * the board is always fully visible (even in vertical viewport). */
 function scaleGameBoard() {
-	var fieldSmall = 30;
-	var fieldLarge = 45;
-	var diceSmall = 40;
-	var diceLarge = 60;
-	var fieldSize = fieldSmall;
-	var diceSize = diceSmall;
-	var diceMargin = (fieldSize - diceSize) / 2;
-	
 	var gameboard = $("#gameboard");
 	
 	var maxWidth = $(window).height() - $("#control").height();
-	$(gameboard).css("max-width", maxWidth);
+	gameboard.css("max-width", maxWidth);
 	
-	if ($(gameboard).width() >= 700) {
-		fieldSize = fieldLarge;
-		diceSize = diceLarge;
-		diceMargin = (fieldSize - diceSize) / 2;
+	if (gameboard.width() >= 700) {
+		gameboard.removeClass("small").addClass("large");
+	} else {
+		gameboard.removeClass("large").addClass("small");
 	}
-	
-	$('.field').css({
-		'width': fieldSize,
-		'height': fieldSize
-	});
-	
-	$('.dice-container').css({
-		'margin-top': diceMargin,
-		'margin-left': diceMargin
-	});
-	$('.dice-container, #dice .side').css({
-		'width': diceSize,
-		'height': diceSize
-	});
-	
-	$('#dice .side').css({
-		'font-size': diceSize * 0.6,
-		'line-height': diceSize + 'px'
-	});
 }
 
 /* Adds the click event handler for various elements */
@@ -220,7 +193,8 @@ function setUpClickHandler() {
 	});
 	
 	$('#open-local-login').click(function(e) {
-		$(this).fadeOut('fast', function() {
+		$(this).animate({ opacity: 0 }, 'fast', function() {
+			$(this).css('visibility', 'hidden');
 			$('#local-login').slideDown();
 		});
 	});

@@ -5,7 +5,7 @@
     <div class="@fieldtype
         @if(fieldtype == "home" || fieldtype == "finish") {player-@playerID}">
     
-	    <div class="col-xs-1">
+	    <div class="col-xs-1 col">
 	        <div class="field field-@index">
 	           <a href="#" class="figure"></a>
 	        </div>
@@ -16,12 +16,12 @@
 }
 
 @printPlayerNameField(playerID:Int) = {
-    <div class="col-xs-2 player-name player-@playerID">
+    <div class="col-xs-2 col player-name player-@playerID">
     </div>
 }
 
 @printSpacer(span:Int) = {
-    <div class="col-xs-@span"></div>
+    <div class="col-xs-@span col"></div>
 }
 
 
@@ -50,7 +50,7 @@
    
 
 
-<div id="gameboard" class="well">
+<div id="gameboard" class="well large">
 
     <!-- Controling the game like starting, quitting, adding a player -->
     <div class="row" id="control">
@@ -135,7 +135,7 @@
         @printField(1, "finish", 0)
         @printField(2, "finish", 0)
         @printField(3, "finish", 0)
-        <div class="col-xs-1">
+        <div class="col-xs-1 col">
 	        <div class="dice-container">
 			    <div id="dice" class="show-six">
 			      <div class="side one">1</div> <!-- front -->

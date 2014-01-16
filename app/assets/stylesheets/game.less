@@ -4,8 +4,12 @@
 @player2-color: yellow;
 @player3-color: green;
 @figure-darken-player-color: 20%;
-@field-size: 30px;
-@dice-size: 40px;
+
+@field-size-small: 20px;
+@dice-size-small: 25px;
+
+@field-size-large: 45px;
+@dice-size-large: 60px;
 
 /* LESS Mixins */
 .gradient (@startColor: #eee, @endColor: white) {
@@ -100,7 +104,7 @@ body {
 }
 
 #login .separator {
-    margin: 40px 0;
+    margin: 0 0 40px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.8);
 }
 
@@ -143,11 +147,19 @@ body {
     font-weight: bold;
 }
 
+#gameboard.large .field {
+    width: @field-size-large;
+    height: @field-size-large;
+}
+
+#gameboard.small .field {
+    width: @field-size-small;
+    height: @field-size-small;
+}
+
 .field {
     border: 1px solid #333;
     border-radius: 50%;
-    width: @field-size;
-    height: @field-size;
     position: relative;
     box-shadow: 0 0 10px #bbb;
 }
@@ -181,20 +193,42 @@ body {
     background: #fff;
 }
 
+/* remove some bootstrap padding */
+#gameboard.small .col {
+    padding: 0 5px;
+}
+
+#gameboard.large .figure.player-0,
+#gameboard.large .figure.player-1,
+#gameboard.large .figure.player-2,
+#gameboard.large .figure.player-3 {
+    @size: @field-size-large * .6;
+    width: @size;
+    height: @size;
+    margin-top: -@size / 2;
+    margin-left: -@size / 2;
+}
+
+#gameboard.small .figure.player-0,
+#gameboard.small .figure.player-1,
+#gameboard.small .figure.player-2,
+#gameboard.small .figure.player-3 {
+    @size: @field-size-small * .6;
+    width: @size;
+    height: @size;
+    margin-top: -@size / 2;
+    margin-left: -@size / 2;
+}
+
 
 .figure.player-0,
 .figure.player-1,
 .figure.player-2,
 .figure.player-3 {
-    @size: @field-size * .6;
     display: block;
-    width: @size;
-    height: @size;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -@size / 2;
-    margin-left: -@size / 2;
     border-radius: 50%;
     border: 1px solid #555;
     
@@ -262,17 +296,30 @@ body {
 }
 
 
+#gameboard.large .dice-container {
+    width: @dice-size-large;
+    height: @dice-size-large;
+    margin-top: (@field-size-large - @dice-size-large) / 2;
+    margin-left: (@field-size-large - @dice-size-large) / 2;
+      -webkit-perspective: @dice-size-large * 5;
+     -moz-perspective: @dice-size-large * 5;
+       -o-perspective: @dice-size-large * 5;
+          perspective: @dice-size-large * 5;
+}
+
+#gameboard.small .dice-container {
+    width: @dice-size-small;
+    height: @dice-size-small;
+    margin-top: (@field-size-small - @dice-size-small) / 2;
+    margin-left: (@field-size-small - @dice-size-small) / 2;
+      -webkit-perspective: @dice-size-small * 5;
+     -moz-perspective: @dice-size-small * 5;
+       -o-perspective: @dice-size-small * 5;
+          perspective: @dice-size-small * 5;
+}
 
 .dice-container {
-  width: @dice-size;
-  height: @dice-size;
   position: relative;
-  margin-top: (@field-size - @dice-size) / 2;
-  margin-left: (@field-size - @dice-size) / 2;
-  -webkit-perspective: @dice-size * 5;
-     -moz-perspective: @dice-size * 5;
-       -o-perspective: @dice-size * 5;
-          perspective: @dice-size * 5;
           
     .side {
         color: #444;
@@ -300,6 +347,14 @@ body {
     }
 }
 
+#gameboard.small #dice {
+    .translateZ(-@dice-size-small/2);
+}
+
+#gameboard.large #dice {
+    .translateZ(-@dice-size-large/2);
+}
+
 #dice {
   width: 100%;
   height: 100%;
@@ -315,18 +370,27 @@ body {
     &:hover {
         cursor: pointer;
     }
-    .translateZ(-@dice-size/2);
+}
+
+#gameboard.large #dice .side {
+  width: @dice-size-large;
+  height: @dice-size-large;
+  line-height: @dice-size-large;
+  font-size: @dice-size-large * 0.6;
+}
+
+#gameboard.small #dice .side {
+  width: @dice-size-small;
+  height: @dice-size-small;
+  line-height: @dice-size-small;
+  font-size: @dice-size-small * 0.6;
 }
 
 #dice .side {
   display: block;
   position: absolute;
-  width: @dice-size;
-  height: @dice-size;
   border: 2px solid #333;
   border-radius: 5px;
-  line-height: @dice-size;
-  font-size: @dice-size * 0.6;
   font-weight: bold;
   text-align: center;
    -webkit-backface-visibility: hidden;
@@ -335,40 +399,30 @@ body {
           backface-visibility: hidden;
 }
 
-#dice .one  {
-    .translateZ(@dice-size / 2);
-}
-#dice .six   {
-    .rotateX-translateZ(-180deg, @dice-size / 2);
-}
-#dice .four {
-    .rotateY-translateZ(90deg, @dice-size / 2);
-}
-#dice .three {
-    .rotateY-translateZ(-90deg, @dice-size / 2);
-}
-#dice .five {
-    .rotateX-translateZ(90deg, @dice-size / 2);
-}
-#dice .two {
-    .rotateX-translateZ(-90deg, @dice-size / 2);
-}
+#gameboard.small #dice .one  { .translateZ(@dice-size-small / 2); }
+#gameboard.small #dice .six   { .rotateX-translateZ(-180deg, @dice-size-small / 2); }
+#gameboard.small #dice .four { .rotateY-translateZ(90deg, @dice-size-small / 2); }
+#gameboard.small #dice .three { .rotateY-translateZ(-90deg, @dice-size-small / 2); }
+#gameboard.small #dice .five { .rotateX-translateZ(90deg, @dice-size-small / 2); }
+#gameboard.small #dice .two { .rotateX-translateZ(-90deg, @dice-size-small / 2); }
 
-#dice.show-one {
-    .translateZ(-@dice-size / 2);
-}
-#dice.show-six {
-    .translateZ-rotateX(-180deg, -@dice-size / 2);
-}
-#dice.show-four {
-    .translateZ-rotateY(-90deg, -@dice-size / 2);
-}
-#dice.show-three {
-    .translateZ-rotateY(90deg, -@dice-size / 2);
-}
-#dice.show-five {
-    .translateZ-rotateX(-90deg, -@dice-size / 2);
-}
-#dice.show-two {
-    .translateZ-rotateX(90deg, -@dice-size / 2);
-}
+#gameboard.small #dice.show-one { .translateZ(-@dice-size-small / 2); }
+#gameboard.small #dice.show-six { .translateZ-rotateX(-180deg, -@dice-size-small / 2); }
+#gameboard.small #dice.show-four { .translateZ-rotateY(-90deg, -@dice-size-small / 2); }
+#gameboard.small #dice.show-three { .translateZ-rotateY(90deg, -@dice-size-small / 2); }
+#gameboard.small #dice.show-five { .translateZ-rotateX(-90deg, -@dice-size-small / 2); }
+#gameboard.small #dice.show-two { .translateZ-rotateX(90deg, -@dice-size-small / 2); }
+
+#gameboard.large #dice .one  { .translateZ(@dice-size-large / 2); }
+#gameboard.large #dice .six   { .rotateX-translateZ(-180deg, @dice-size-large / 2); }
+#gameboard.large #dice .four { .rotateY-translateZ(90deg, @dice-size-large / 2); }
+#gameboard.large #dice .three { .rotateY-translateZ(-90deg, @dice-size-large / 2); }
+#gameboard.large #dice .five { .rotateX-translateZ(90deg, @dice-size-large / 2); }
+#gameboard.large #dice .two { .rotateX-translateZ(-90deg, @dice-size-large / 2); }
+
+#gameboard.large #dice.show-one { .translateZ(-@dice-size-large / 2); }
+#gameboard.large #dice.show-six { .translateZ-rotateX(-180deg, -@dice-size-large / 2); }
+#gameboard.large #dice.show-four { .translateZ-rotateY(-90deg, -@dice-size-large / 2); }
+#gameboard.large #dice.show-three { .translateZ-rotateY(90deg, -@dice-size-large / 2); }
+#gameboard.large #dice.show-five { .translateZ-rotateX(-90deg, -@dice-size-large / 2); }
+#gameboard.large #dice.show-two { .translateZ-rotateX(90deg, -@dice-size-large / 2); }
