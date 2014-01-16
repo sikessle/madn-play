@@ -32,7 +32,7 @@ public class Application extends Controller {
 			.getInstance().getBoardController();
 	private static TUIView tui = GameTuiSingleton.getInstance().getTUIView();
 
-	// @Security.Authenticated(Secured.class)
+	@Security.Authenticated(Secured.class)
 	public static Result index() {
 		return getResult();
 	}
