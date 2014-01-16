@@ -13,6 +13,7 @@
 		        
 			    <h1>Sign in</h1>
 			    
+			    <!-- Sign-in with google -->
 			    <div class="center google-login">
 			         <a href="@routes.Application.openIdAuth">
 			             <button class="btn btn-lg btn-primary">
@@ -23,6 +24,7 @@
 			    
 			    <div class="separator"></div>
 			    
+			    <!-- Sign in with local user management -->
                 @helper.form(action = routes.Application.authenticate) {
 			    
 			    @if(form.hasGlobalErrors) {
