@@ -11,9 +11,19 @@
 
 		    <div id="login" class="well">
 		        
-		        @helper.form(action = routes.Application.authenticate) {
-			    
 			    <h1>Sign in</h1>
+			    
+			    <div class="center google-login">
+			         <a href="@routes.Application.openIdAuth">
+			             <button class="btn btn-lg btn-primary">
+			                 <span class="glyphicon glyphicon-user"></span>
+			                 Log in with Google</button>
+			          </a>
+			    </div>
+			    
+			    <div class="separator"></div>
+			    
+                @helper.form(action = routes.Application.authenticate) {
 			    
 			    @if(form.hasGlobalErrors) {
 		        <div class="alert alert-danger">
@@ -32,7 +42,7 @@
 		       </div>
 		     
 		       <div class="center">
-		          <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+		          <button type="submit" class="btn btn-lg btn-primary">Log in local user</button>
 			   </div>
 			   
 			   }

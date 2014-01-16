@@ -1,8 +1,14 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import models.BoardControllerObserver;
+import play.core.Router;
 import play.data.Form;
+import play.libs.F;
 import play.libs.Json;
+import play.libs.OpenID;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
@@ -70,6 +76,29 @@ public class Application extends Controller {
 			}
 
 		};
+	}
+
+	public static Result openIdAuth() {
+		String providerUrl = "https://www.google.com/accounts/o8/id";
+		String returnToUrl = "http://" + request().host() + "/openID/verify";
+		Map<String, String> attributes = new HashMap<>();
+		attributes.put("Email", "http://schema.openid.net/contact/email");
+		F.Promise<String> redirectUrl = OpenID.redirectURL(providerUrl,
+				returnToUrl, attributes);
+		return redirect(redirectUrl.get());
+	}
+
+	public Result openIdVerify() {
+		try {
+			F.Promise<OpenID.UserInfo> userInfoPromise = OpenID.verifiedId();
+			OpenID.UserInfo userInfo = userInfoPromise.get();
+			session().clear();
+			session("email", userInfo.attributes.get("Email"));
+			return redirect(routes.Application.index());
+		} catch (Throwable x) {
+			return redirect(routes.Application.login());
+		}
+
 	}
 
 	public static Result logout() {
