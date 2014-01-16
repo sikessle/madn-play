@@ -4,19 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import models.BoardControllerObserver;
-import play.core.Router;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.F;
 import play.libs.Json;
 import play.libs.OpenID;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import play.mvc.WebSocket;
-import play.data.*;
-import static play.data.Form.*;
-import play.*;
-import play.mvc.*;
-import play.mvc.Http.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -26,6 +22,8 @@ import de.htwg.madn.model.Dice;
 import de.htwg.madn.view.tui.TUIView;
 
 public class Application extends Controller {
+
+	public static final String SESSION_KEY = "email";
 
 	private static IBoardControllerPort boardController = GameTuiSingleton
 			.getInstance().getBoardController();
@@ -79,6 +77,7 @@ public class Application extends Controller {
 	}
 
 	public static Result openIdAuth() {
+		// use google open id
 		String providerUrl = "https://www.google.com/accounts/o8/id";
 		String returnToUrl = "http://" + request().host() + "/openID/verify";
 		Map<String, String> attributes = new HashMap<>();
@@ -93,7 +92,7 @@ public class Application extends Controller {
 			F.Promise<OpenID.UserInfo> userInfoPromise = OpenID.verifiedId();
 			OpenID.UserInfo userInfo = userInfoPromise.get();
 			session().clear();
-			session("email", userInfo.attributes.get("Email"));
+			session(SESSION_KEY, userInfo.attributes.get("Email"));
 			return redirect(routes.Application.index());
 		} catch (Throwable x) {
 			return redirect(routes.Application.login());
@@ -116,11 +115,15 @@ public class Application extends Controller {
 			return badRequest(views.html.login.render(loginForm));
 		} else {
 			session().clear();
-			session("email", loginForm.get().email);
+			session(SESSION_KEY, loginForm.get().email);
 			return redirect(routes.Application.index());
 		}
 	}
 
+	/**
+	 * Login class which offers a validate method to validate against a default
+	 * user.
+	 */
 	public static class Login {
 
 		public String email;

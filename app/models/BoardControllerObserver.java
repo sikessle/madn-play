@@ -7,6 +7,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import de.htwg.madn.controller.IBoardControllerPort;
 import de.htwg.madn.util.observer.IObserver;
 
+/**
+ * Observes the board controller and writes the json game board data to the
+ * websocket out channel.
+ */
 public class BoardControllerObserver implements IObserver {
 
 	private final Out<JsonNode> out;
