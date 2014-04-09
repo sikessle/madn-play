@@ -12,10 +12,7 @@ dist
 /*.iml
 /out
 /.idea_modules
-/.classpath
-/.project
 /RUNNING_PID
-/.settings
 /project/*-shim.sbt
 /bin
 .DS_Store
