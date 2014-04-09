@@ -11,7 +11,7 @@ dist
 /.target
 /*.iml
 /out
-/.classpath
+.classpath
 /.idea_modules
 /RUNNING_PID
 /project/*-shim.sbt
