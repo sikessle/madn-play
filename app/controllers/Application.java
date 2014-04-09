@@ -83,7 +83,7 @@ public class Application extends Controller {
 		// use google open id
 		String providerUrl = "https://www.google.com/accounts/o8/id";
 		String returnToUrl = "http://" + request().host() + "/openID/verify";
-		Map<String, String> attributes = new HashMap<>();
+		Map<String, String> attributes = new HashMap<String, String>();
 		attributes.put("Email", "http://schema.openid.net/contact/email");
 		F.Promise<String> redirectUrl = OpenID.redirectURL(providerUrl,
 				returnToUrl, attributes);
